@@ -1,0 +1,44 @@
+body {
+    background-image: url("food.png");
+    text-align: center;
+}
+
+.margin {
+    text-align: center;
+    font-family: 'Amatic SC', cursive;
+    font-size: 90px;
+    margin-bottom: -20px;
+}
+
+.bg-2 {
+    margin-top: 30px;
+}
+
+.start {
+    padding: 10px;
+    font-size: 12px;
+}
+
+#right-counter {
+    display: inline-block;
+    word-spacing: 3px;
+    position: relative;
+    left: -10px;
+   
+   
+}
+
+#wrong-counter {
+    display: inline-block;
+    word-spacing: 3px;
+    position: relative;
+    right: -10px;
+   
+}
+
+#button {
+    padding: 20px;
+    font-size: 12px;
+    
+}
+

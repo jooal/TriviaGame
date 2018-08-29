@@ -101,7 +101,7 @@ var questionsArray=[
                 panel.html("Time is up!");
                 $("#correct-answer").text("The correct answer was: "+ questionsArray[this.currentQuestion].answer)
             }
-        },);
+        },1000);
     }
     
         function loadQuestion () {

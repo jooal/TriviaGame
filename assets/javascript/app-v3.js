@@ -1,4 +1,3 @@
-
 var questionsArray=[
     {question: "How many chambers are there in a dog’s heart?", 
     choices: ["2", "3", "4", "5"],
@@ -45,7 +44,6 @@ var questionsArray=[
     {question: "What is the most abundant element in the earth’s atmosphere?",
     choices:["Oxygen", "Carbon", "Nitrogen", "Carbon Dioxide"], 
     answer: "Nitrogen"},
-    
     {question: "The Statue of Liberty was a gift to the United States from which country?",
     choices:["Germany", "France", "Spain", "Canada"], 
     answer: "France"},
@@ -71,90 +69,135 @@ var questionsArray=[
     choices:["Teeth", "Spiders", "Outside", "Trees"], 
     answer: "Trees"}
     ];
-    //15 seconds on counter
-        
-        var panel = $("#panel"); //where the questions will be shown
-        var correctAnswer = $("#correct-answer");
 
-        var choicesSection = $("#answer-choices");
-        $(document).ready(function() {
-            $(document).on("click", "#id-start", function(e) {
-                clearInterval(timer)
-                loadQuestion();
-            })
-        });
-        $(document).on('click', '#button', function(e) {
-            clearInterval(timer)
-            clicked(e);
-        });
-    
+    //stopInterval(timer);
+    //where the questions will be shown
+    var panel = $("#panel"); 
+    //where correct answer is shown
+    var correctAnswer = $("#correct-answer");
+    //where choices are displayed
+    var choicesSection = $("#answer-choices");
     var currentQuestion = 0;
     var correct= 0; 
     var incorrect = 0; 
-    function timer(){
-        var sec = 15;
-        var timer = setInterval(function(){
-            document.getElementById("timer").innerHTML=("00:"+sec);
-            sec--;
-            console.log()
-            if (sec < 0) {
-                clearInterval(timer);
-                incorrect++;
-                $("#wrong-counter").append(incorrect);
-                panel.html("Time is up!");
-                $("#correct-answer").text("The correct answer was: "+ questionsArray[this.currentQuestion].answer)
-            }
-        },1000);
+    var wrongCounter = $("#wrong-counter");
+    var rightCounter= $("#right-counter");
+
+
+
+    $(document).ready(function() {
+        $(document).on("click", "#id-start", function() {
+            // $("#margin").onload(function(){
+            //     $("#margin").slideDown("slow");
+            //clearInterval(timer)
+            loadQuestion();
+        })
+    });
+
+    // var loadQuestion = function(){
+    //     console.log('running')
+    //     var question = questionsArray[currentQuestion.question]
+    //     panel.append('<button>' + question + '<button>')
+    //     currentQuestion++
+    // }
+
+    $(document).on('click', '#choicesbutton', function(event) {
+        clearInterval(timer)
+        clicked(event);
+    });
+
+
+    var seconds = 15;
+    var timer = setInterval(function() {
+      console.log(seconds);
+      document.getElementById("timer").innerHTML=("00:"+seconds);
+      seconds--;
+      if(seconds < 0) {
+        stopInterval()
+      }
+    }, 1000);
+    
+    var stopInterval = function() {
+      clearInterval(timer);
+      incorrect++;
+      wrongCounter.html("Questions wrong: " + incorrect);
+      panel.html("Time is up!");
+      $("#correct-answer").text("The correct answer was: "+ questionsArray[this.currentQuestion].answer)
+      setTimeout( function(){ 
+        nextQuestion()
+      }  , 3000 );
+    }
+
+    //load first question
+    function loadQuestion () {
+    //clearInterval(timer);
+      //timer();
+      panel.html(questionsArray[this.currentQuestion].question);
+      for (var i = 0; i<questionsArray[this.currentQuestion].choices.length; i++){
+     choicesSection.append('<button id="choicesbutton">' + questionsArray[this.currentQuestion].choices[i] + '</button>');
+      }
     }
     
-        function loadQuestion () {
-            clearInterval(timer)
-            timer();
-          panel.html(questionsArray[this.currentQuestion].question);
-          for (var i = 0; i<questionsArray[this.currentQuestion].choices.length; i++){
-            choicesSection.append('<button id="button">' + questionsArray[this.currentQuestion].choices[i] + '</button>');
-          }
+    //load next question and answer choices while resetting time
+    //3 occurences for nextQuestion to run: when player is right, wrong, or out of time 
+   function nextQuestion(){
+       // setInterval();
+         timer;
+         currentQuestion++;
+         panel.empty()
+         choicesSection.empty()
+         correctAnswer.empty();
+        loadQuestion();      
+
+       // if ([this.currentQuestion].question === questionsArray.length) {
+        //    gameOver();
         }
-       function nextQuestion(){
-         timer();
-          currentQuestion++;
-          panel.empty()
-          choicesSection.empty()
-          //correctAnswer.empty();
-          panel.html(questionsArray[this.currentQuestion].question);
-          for (var i = 0; i<questionsArray[this.currentQuestion].choices.length; i++){
-            choicesSection.append('<button id="button">' + questionsArray[this.currentQuestion].choices[i] + '</button>');
-       
+    //}
+
+    function clicked(event) {
+        //clearInterval(timer);
+    
+        if ((event) === questionsArray[this.currentQuestion].answer){
+            console.log(event)
+          answeredCorrectly();
+        } else {
+          answeredIncorrectly();
         }
+      }
+
+    function answeredIncorrectly() {
+        //need if statement to say if answer is not correct do the following
+        // if (clicked() !== questionsArray[this.currentQuestion].answer){
+      incorrect++;
+      $("#wrong-counter").text("Questions wrong: " + incorrect); 
+      panel.empty()
+      panel.html("Wrong Answer!");
+      $("#correct-answer").text("The correct answer was: " + questionsArray[this.currentQuestion].answer);
+      setTimeout( function(){ 
+        nextQuestion()
+      }  , 3000 );
     }
-            
-        function clicked(e) {
-          clearInterval(timer);
-      
-          if ((e) === questionsArray[this.currentQuestion].answer){
-              console.log(e)
-            answeredCorrectly();
-          } else {
-            answeredIncorrectly();
-          }
+
+    function answeredCorrectly(){
+        clearInterval(timer);
+        correct++;
+        $("#right-counter").text("Questions right: "+ correct);
+        panel.empty()
+        panel.html('<h2>Correct!</h2>');
+        setTimeout( function(){ 
+            nextQuestion()
+          }  , 3000 );
         }
-        function answeredIncorrectly() {
-            //need if statement to say if answer is not correct do the following
-            // if (clicked() !== questionsArray[this.currentQuestion].answer){
-          incorrect++;
-          $("#wrong-counter").text(incorrect);
-          clearInterval(timer);
-          panel.empty()
-          panel.html("Wrong Answer!");
-          $("#correct-answer").text("The correct answer was: " + questionsArray[currentQuestion].answer);
-          setTimeout(nextQuestion(), 3000);
-          
-        }
-        function answeredCorrectly(){
-          clearInterval(timer);
-          correct++;
-          $("#right-counter").text(correct);
-          panel.empty()
-          panel.html('<h2>Correct!</h2>');
-            setTimeout(nextQuestion(), 3000);
-          }
+   
+    
+
+    //notes: want time to start when click on start game, not when page loads
+    //need function to evaluate wrong vs right correctly
+    //need timer to reset on nextQuestion()
+    //need a gameover function
+    
+function gameOver() {
+    clearInterval(timer);
+    panel.html("<h2>Game Over!</h2>")
+}
+

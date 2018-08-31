@@ -1,5 +1,6 @@
 body {
     background-image: url("food.png");
+    
     text-align: center;
 }
 
@@ -8,6 +9,7 @@ body {
     font-family: 'Amatic SC', cursive;
     font-size: 90px;
     margin-bottom: -20px;
+   
 }
 
 .bg-2 {
@@ -16,7 +18,10 @@ body {
 
 .start {
     padding: 10px;
-    font-size: 12px;
+    font-size: 20px;
+    background-color: #008CBA;
+    color: white;
+    font-family: 'Amatic SC', cursive;
 }
 
 #right-counter {
@@ -41,4 +46,25 @@ body {
     font-size: 12px;
     
 }
+p {
+    font-family: 'Amatic SC', cursive;
+    font-size: 30px;
+    text-emphasis-color: black;
+    
+}
 
+/* #title {
+    background-color: rgb(245, 92, 72);
+    margin-left: 200px;
+    margin-right: 200px;
+    margin-bottom: 0px;
+}
+
+#body {
+    background-color: rgb(245, 92, 72);
+    margin-left: 200px;
+    margin-right: 200px;
+    padding-top: 10px;
+    padding-bottom: 30px;
+    margin-top: 0px;
+} */

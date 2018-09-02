@@ -82,47 +82,43 @@ var questionsArray=[
     var incorrect = 0; 
     var wrongCounter = $("#wrong-counter");
     var rightCounter= $("#right-counter");
+    var seconds = 10;
 
-
+    //stopInterval(timer);
 
     $(document).ready(function() {
         $(document).on("click", "#id-start", function() {
-            // $("#margin").onload(function(){
-            //     $("#margin").slideDown("slow");
-            //clearInterval(timer)
+          
             loadQuestion();
         })
     });
 
-    // var loadQuestion = function(){
-    //     console.log('running')
-    //     var question = questionsArray[currentQuestion.question]
-    //     panel.append('<button>' + question + '<button>')
-    //     currentQuestion++
-    // }
+
 
     $(document).on('click', '#choicesbutton', function(event) {
         clearInterval(timer)
         clicked(event);
     });
+    var timer;
 
-
-    var seconds = 15;
-    var timer = setInterval(function() {
-      console.log(seconds);
+    var setTimer = function(){
+      clearInterval(timer)
+      timer = setInterval(function() {
+      //console.log(seconds);
       document.getElementById("timer").innerHTML=("00:"+seconds);
       seconds--;
       if(seconds < 0) {
-        stopInterval()
+        timeUp()
       }
     }, 1000);
+  }
     
-    var stopInterval = function() {
+    var timeUp = function() {
       clearInterval(timer);
       incorrect++;
       wrongCounter.html("Questions wrong: " + incorrect);
       panel.html("Time is up!");
-      $("#correct-answer").text("The correct answer was: "+ questionsArray[this.currentQuestion].answer)
+      $("#correct-answer").text("The correct answer was: "+ questionsArray[currentQuestion].answer)
       setTimeout( function(){ 
         nextQuestion()
       }  , 3000 );
@@ -130,56 +126,50 @@ var questionsArray=[
 
     //load first question
     function loadQuestion () {
-    //clearInterval(timer);
-      //timer();
-      panel.html(questionsArray[this.currentQuestion].question);
-      for (var i = 0; i<questionsArray[this.currentQuestion].choices.length; i++){
-     choicesSection.append('<button id="choicesbutton">' + questionsArray[this.currentQuestion].choices[i] + '</button>');
+      setTimer();
+      panel.html(questionsArray[currentQuestion].question);
+      for (var i = 0; i<questionsArray[currentQuestion].choices.length; i++){
+     choicesSection.append('<button id="choicesbutton">' + questionsArray[currentQuestion].choices[i] + '</button>');
       }
     }
     
     //load next question and answer choices while resetting time
     //3 occurences for nextQuestion to run: when player is right, wrong, or out of time 
    function nextQuestion(){
-       // setInterval();
-         timer;
+         seconds = 10;
          currentQuestion++;
          panel.empty()
          choicesSection.empty()
          correctAnswer.empty();
         loadQuestion();      
 
-       // if ([this.currentQuestion].question === questionsArray.length) {
-        //    gameOver();
         }
-    //}
+   
 
     function clicked(event) {
-        //clearInterval(timer);
     
-        if ((event) === questionsArray[this.currentQuestion].answer){
-            console.log(event)
+        console.log(event)
+        if (event.target.innerText === questionsArray[currentQuestion].answer){
+          console.log('correct!')
           answeredCorrectly();
         } else {
+          console.log('incorrect!')
           answeredIncorrectly();
         }
       }
 
     function answeredIncorrectly() {
-        //need if statement to say if answer is not correct do the following
-        // if (clicked() !== questionsArray[this.currentQuestion].answer){
       incorrect++;
       $("#wrong-counter").text("Questions wrong: " + incorrect); 
       panel.empty()
       panel.html("Wrong Answer!");
-      $("#correct-answer").text("The correct answer was: " + questionsArray[this.currentQuestion].answer);
+      $("#correct-answer").text("The correct answer was: " + questionsArray[currentQuestion].answer);
       setTimeout( function(){ 
         nextQuestion()
       }  , 3000 );
     }
 
     function answeredCorrectly(){
-        clearInterval(timer);
         correct++;
         $("#right-counter").text("Questions right: "+ correct);
         panel.empty()
@@ -191,13 +181,5 @@ var questionsArray=[
    
     
 
-    //notes: want time to start when click on start game, not when page loads
-    //need function to evaluate wrong vs right correctly
-    //need timer to reset on nextQuestion()
-    //need a gameover function
-    
-function gameOver() {
-    clearInterval(timer);
-    panel.html("<h2>Game Over!</h2>")
-}
+
 

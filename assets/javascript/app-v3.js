@@ -88,17 +88,22 @@ var questionsArray=[
 
     $(document).ready(function() {
         $(document).on("click", "#id-start", function() {
-          
             loadQuestion();
+            document.getElementById("id-start").textContent="Reset";
+            document.getElementById("id-start").id="reset";
         })
     });
 
+    $(document).on("click", "#reset", function() {
+      reset();
+    })
 
 
     $(document).on('click', '#choicesbutton', function(event) {
         clearInterval(timer)
         clicked(event);
     });
+
     var timer;
 
     var setTimer = function(){
@@ -179,7 +184,19 @@ var questionsArray=[
           }  , 3000 );
         }
    
-    
+
+        function reset() {
+          clearInterval(timer);
+          panel.empty();
+          choicesSection.empty();
+          correctAnswer.empty();
+          currentQuestion=0;
+          correct=0;
+          incorrect=0;
+          seconds=10;
+          loadQuestion();
+      
+        }
 
 
 

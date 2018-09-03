@@ -11,33 +11,18 @@ var questionsArray=[
     {question: "What is the most common blood type in humans?",
     choices:["o+", "b", "a+", "i"],
     answer: "o+"},
-    {question: "What chemical element gives the blood of a lobster a bluish tint?",
-    choices:["Iron", "Zinc", "Copper", "Gold"],
-    answer: "Copper"},
     {question:"What does the acronym for the German multinational company BMW stand for?", 
     choices:["Big Motor Wheels", "Bavarian Motor Works", "Beige Master Wheels", "Bordex Machine Works"],
     answer: "Bavarian Motor Works"},
-    {question: "Which gland in the human body regulates metabolism?",
-    choices:["Adrenal", "Thyroid", "Pituitary", "Pineal"],
-    answer: "Thyroid"},
     {question: "Diamonds are made up almost entirely of what element?", 
     choices:["Diamonds", "Carbon", "Boron", "Cadmium"],
     answer: "Carbon"},
-    {question: "What does the acronym USB stand for when referring to a computer port?", 
-    choices:["Unplugged Service Bit", "Universal Service Box", "Universal Serial Bus", "Universal Secure Box"],
-    answer: "Universal Serial Bus"},
     {question: "If a liquor is 100 proof how much alcohol does it contain by percentage?", 
     choices:["100", "75", "50", "25"],
     answer: "50"},
-    {question: "What ingredient is added to white sugar to make brown sugar?", 
-    choices:["Food coloring", "Cinnamon", "Sugar cane roots", "Molasses"],
-    answer: "Molasses"},
     {question: "Founded in 1921, this company was credited with being the first “fast food” chain?",
     choices:["McDonald's", "Burger King", "White Castle", "Wendy's"],
     answer: "White Castle"},
-    {question:"Who was the first person selected as Time Magazine’s Man of the Year?", 
-    choices:["Charles Lindbergh", "Winston Churchill", "Franklin Roosevelt", "Obama"], 
-    answer: "Charles Lindbergh"},
     {question: "Stratus, Cirrus and Cumulus are types of what?", 
     choices:["Food", "Languages", "Rocks", "Clouds"],
     answer: "Clouds"},
@@ -53,9 +38,6 @@ var questionsArray=[
     {question:"What building is found on the back of a United States 100 dollar bill?",
     choices:["The Capital", "The White House", "Independence Hall", "The Washington Monument"],
     answer: "Independence Hall"},
-    {question: "What is the name for the monetary unit used in Thailand?",
-    choices:["Thai Baht", "Thai Won", "Thai Dollar", "Thai Coin"], 
-    answer: "Thai Baht"},
     {question: "Who was the first woman to be inducted into the Rock and Roll Hall of Fame?",
     choices:["Taylor Swift", "Arethra Franklin", "Tina Turner", "Patti Smith"],
     answer: "Arethra Franklin"},
@@ -187,12 +169,16 @@ var questionsArray=[
 
         function reset() {
           clearInterval(timer);
+          clearInterval(correct);
+          clearInterval(incorrect);
           panel.empty();
           choicesSection.empty();
           correctAnswer.empty();
           currentQuestion=0;
           correct=0;
+          $("#right-counter").text("Questions right: "+ correct);
           incorrect=0;
+          wrongCounter.html("Questions wrong: " + incorrect);     
           seconds=10;
           loadQuestion();
       
